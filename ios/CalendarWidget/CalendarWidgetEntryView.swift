@@ -23,15 +23,14 @@ struct CalendarWidgetEntryView: View {
     private let dayLabels = ["M", "T", "W", "T", "F", "S", "S"]
 
     var body: some View {
-        ZStack {
-            Color.background.ignoresSafeArea()
-            VStack(spacing: 4) {
-                headerRow
-                dayHeaderRow
-                calendarGrid
-            }
-            .padding(10)
+        VStack(spacing: 4) {
+            headerRow
+            dayHeaderRow
+            calendarGrid
         }
+        .padding(10)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .widgetBackground(Color.background)
     }
 
     // MARK: Header
@@ -81,9 +80,10 @@ struct CalendarWidgetEntryView: View {
                         dayCellView(for: date)
                     }
                 }
-                .frame(maxHeight: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     @ViewBuilder
@@ -214,6 +214,19 @@ private extension Array {
     func chunked(into size: Int) -> [[Element]] {
         stride(from: 0, to: count, by: size).map {
             Array(self[$0..<Swift.min($0 + size, count)])
+        }
+    }
+}
+
+// MARK: - Cross-version widget background
+
+private extension View {
+    @ViewBuilder
+    func widgetBackground(_ color: Color) -> some View {
+        if #available(iOS 17, *) {
+            self.containerBackground(color, for: .widget)
+        } else {
+            self.background(color)
         }
     }
 }
