@@ -39,7 +39,7 @@ dependencies:
   intl: ^0.20.2
 
   # Background tasks (Android widget refresh)
-  workmanager: ^0.5.2
+  workmanager: ^0.9.0
 
   cupertino_icons: ^1.0.8
 

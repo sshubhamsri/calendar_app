@@ -7,16 +7,12 @@ import 'package:workmanager/workmanager.dart';
 import 'app.dart';
 import 'core/constants/app_constants.dart';
 
-// Background task name for Android WorkManager
 const _widgetRefreshTask = 'widgetRefresh';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
-    // Background tasks run in isolate — only use SharedPreferences
-    // The native widget reads SharedPreferences directly,
-    // so no Flutter-side work is needed here beyond triggering an update.
-    return Future.value(true);
+    return true;
   });
 }
 
@@ -24,7 +20,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await _initHive();
-  await _initHomeWidget();
+  _initHomeWidget();
   await _initWorkManager();
 
   runApp(const ProviderScope(child: CalendarApp()));
@@ -39,7 +35,7 @@ Future<void> _initHive() async {
   ]);
 }
 
-Future<void> _initHomeWidget() async {
+void _initHomeWidget() {
   HomeWidget.setAppGroupId('group.com.naehas.calendar_app');
 }
 
@@ -50,6 +46,6 @@ Future<void> _initWorkManager() async {
     _widgetRefreshTask,
     frequency: const Duration(minutes: 15),
     constraints: Constraints(networkType: NetworkType.connected),
-    existingWorkPolicy: ExistingWorkPolicy.keep,
+    existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
   );
 }
