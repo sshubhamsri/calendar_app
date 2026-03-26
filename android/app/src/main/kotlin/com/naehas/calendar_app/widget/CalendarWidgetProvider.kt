@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.net.Uri
 import android.widget.RemoteViews
 import com.naehas.calendar_app.R
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -53,10 +54,10 @@ class CalendarWidgetProvider : AppWidgetProvider() {
         private const val WIDGET_PREFS = "widget_month_prefs"
         private const val KEY_MONTH_OFFSET = "month_offset"
 
-        // Dark text colors (for semi-transparent white widget background)
-        private val COLOR_DAY_NORMAL = Color.parseColor("#1F1F1F")
-        private val COLOR_DAY_SUNDAY = Color.parseColor("#D93025")
-        private val COLOR_DAY_MUTED = Color.parseColor("#BDBDBD")
+        // Light text colors (for transparent widget background)
+        private val COLOR_DAY_NORMAL = Color.WHITE
+        private val COLOR_DAY_SUNDAY = Color.parseColor("#FF6B6B")
+        private val COLOR_DAY_MUTED = Color.parseColor("#80FFFFFF")
         private val COLOR_TODAY_TEXT = Color.WHITE
 
         fun updateWidget(
@@ -64,7 +65,11 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
         ) {
-            val prefs: SharedPreferences = HomeWidgetPlugin.getData(context)
+            val prefs: SharedPreferences = try {
+                HomeWidgetPlugin.getData(context)
+            } catch (_: Exception) {
+                context.getSharedPreferences("HomeWidgetPlugin", Context.MODE_PRIVATE)
+            }
             val views = RemoteViews(context.packageName, R.layout.calendar_widget_layout)
 
             val monthOffset = context
@@ -107,6 +112,12 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             val nextIntent = Intent(context, CalendarWidgetProvider::class.java).apply {
                 action = ACTION_NEXT_MONTH
             }
+            val addIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("calendarapp://app/create-event")
+            ).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
             views.setOnClickPendingIntent(
                 R.id.widget_prev_month,
                 PendingIntent.getBroadcast(
@@ -118,6 +129,13 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 R.id.widget_next_month,
                 PendingIntent.getBroadcast(
                     context, 1, nextIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+            views.setOnClickPendingIntent(
+                R.id.widget_add_btn,
+                PendingIntent.getActivity(
+                    context, 2, addIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             )
