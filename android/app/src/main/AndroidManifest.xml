@@ -39,6 +39,8 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.naehas.calendar_app.PREV_MONTH"/>
+                <action android:name="com.naehas.calendar_app.NEXT_MONTH"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

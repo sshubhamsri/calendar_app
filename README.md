@@ -1,4 +1,4 @@
-# calendar_app
+# calendar_app copy of samsung calender
 
 A new Flutter project.
 
