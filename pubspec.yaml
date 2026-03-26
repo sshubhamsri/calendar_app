@@ -1,0 +1,56 @@
+name: calendar_app
+description: "A Flutter calendar app with device calendar sync and home screen widgets."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Calendar
+  device_calendar_plus: ^0.3.4
+
+  # Home screen widget bridge
+  home_widget: ^0.9.0
+
+  # State management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Navigation
+  go_router: ^14.8.1
+
+  # Permissions
+  permission_handler: ^11.4.0
+
+  # Location (optional, only for auto-weather)
+  geolocator: ^13.0.2
+
+  # HTTP
+  dio: ^5.8.0+1
+
+  # Local cache
+  hive_flutter: ^1.1.0
+
+  # Date/time
+  intl: ^0.20.2
+
+  # Background tasks (Android widget refresh)
+  workmanager: ^0.5.2
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.15
+  riverpod_generator: ^2.6.5
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/weather/
