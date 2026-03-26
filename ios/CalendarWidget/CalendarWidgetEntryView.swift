@@ -3,15 +3,15 @@ import WidgetKit
 
 // MARK: - Colors
 private extension Color {
-    static let background = Color(red: 0.051, green: 0.106, blue: 0.243)
-    static let surface = Color(red: 0.075, green: 0.137, blue: 0.286)
+    static let background = Color(red: 0.0, green: 0.0, blue: 0.0)      // True black for OLED
+    static let surface = Color(red: 0.051, green: 0.051, blue: 0.051)
     static let textPrimary = Color.white
-    static let textSecondary = Color(red: 0.690, green: 0.769, blue: 0.871)
-    static let textMuted = Color(red: 0.420, green: 0.549, blue: 0.682)
+    static let textSecondary = Color(red: 0.667, green: 0.667, blue: 0.667)
+    static let textMuted = Color(red: 0.333, green: 0.333, blue: 0.333)
     static let sundayRed = Color(red: 0.906, green: 0.298, blue: 0.235)
     static let accent = Color(red: 0.290, green: 0.565, blue: 0.851)
-    static let weekNumber = Color(red: 0.290, green: 0.435, blue: 0.647)
-    static let divider = Color(red: 0.118, green: 0.212, blue: 0.376)
+    static let weekNumber = Color(red: 0.267, green: 0.267, blue: 0.267)
+    static let divider = Color(red: 0.133, green: 0.133, blue: 0.133)
 }
 
 // MARK: - Entry View

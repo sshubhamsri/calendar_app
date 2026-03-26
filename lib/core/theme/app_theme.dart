@@ -3,26 +3,26 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  static const Color background = Color(0xFF0D1B3E);
-  static const Color surface = Color(0xFF132349);
-  static const Color cardBackground = Color(0xFF162757);
+  static const Color background = Color(0xFF000000);   // True black for OLED
+  static const Color surface = Color(0xFF0D0D0D);       // Near-black surface
+  static const Color cardBackground = Color(0xFF141414); // Slightly lifted card
   static const Color accent = Color(0xFF4A90D9);
   static const Color accentGreen = Color(0xFF2ECC71);
   static const Color accentTeal = Color(0xFF1ABC9C);
   static const Color sundayRed = Color(0xFFE74C3C);
   static const Color todayCircle = Color(0xFFFFFFFF);
-  static const Color todayText = Color(0xFF0D1B3E);
+  static const Color todayText = Color(0xFF000000);     // Match new background
   static const Color textPrimary = Color(0xFFFFFFFF);
-  static const Color textSecondary = Color(0xFFB0C4DE);
-  static const Color textMuted = Color(0xFF6B8CAE);
-  static const Color divider = Color(0xFF1E3560);
+  static const Color textSecondary = Color(0xFFAAAAAA); // Neutral grey on black
+  static const Color textMuted = Color(0xFF555555);
+  static const Color divider = Color(0xFF222222);       // Subtle divider on black
   static const Color eventBlue = Color(0xFF3A7BD5);
   static const Color eventGreen = Color(0xFF27AE60);
   static const Color eventPurple = Color(0xFF8E44AD);
   static const Color eventOrange = Color(0xFFE67E22);
-  static const Color weekNumberColor = Color(0xFF4A6FA5);
-  static const Color holidayText = Color(0xFF7FB3D3);
-  static const Color shimmer = Color(0xFF1E3560);
+  static const Color weekNumberColor = Color(0xFF444444);
+  static const Color holidayText = Color(0xFF6699BB);
+  static const Color shimmer = Color(0xFF1A1A1A);
 }
 
 class AppTheme {
