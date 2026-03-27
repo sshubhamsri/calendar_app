@@ -51,9 +51,19 @@
             android:text="" />
 
         <TextView
+            android:id="@+id/widget_settings_btn"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:gravity="center"
+            android:text="&#9881;"
+            android:textColor="#CCFFFFFF"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/widget_add_btn"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:layout_marginStart="2dp"
             android:gravity="center"
             android:text="+"
             android:textColor="#CCFFFFFF"

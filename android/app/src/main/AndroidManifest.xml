@@ -48,6 +48,7 @@
                 <action android:name="com.naehas.calendar_app.PREV_MONTH"/>
                 <action android:name="com.naehas.calendar_app.NEXT_MONTH"/>
                 <action android:name="com.naehas.calendar_app.RESET_MONTH"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

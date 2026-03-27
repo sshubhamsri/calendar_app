@@ -8,6 +8,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.widget.RemoteViews
 import com.naehas.calendar_app.R
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -47,6 +50,13 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 context.getSharedPreferences(WIDGET_PREFS, Context.MODE_PRIVATE)
                     .edit().putInt(KEY_MONTH_OFFSET, 0).apply()
 
+                val manager = AppWidgetManager.getInstance(context)
+                val ids = manager.getAppWidgetIds(
+                    android.content.ComponentName(context, CalendarWidgetProvider::class.java)
+                )
+                ids.forEach { updateWidget(context, manager, it) }
+            }
+            Intent.ACTION_USER_PRESENT -> {
                 val manager = AppWidgetManager.getInstance(context)
                 val ids = manager.getAppWidgetIds(
                     android.content.ComponentName(context, CalendarWidgetProvider::class.java)
@@ -160,6 +170,19 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             )
+            val settingsIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("calendarapp://app/settings")
+            ).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            views.setOnClickPendingIntent(
+                R.id.widget_settings_btn,
+                PendingIntent.getActivity(
+                    context, 4, settingsIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
         }
 
         private fun populateGrid(
@@ -169,7 +192,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             now: Calendar,
             prefs: SharedPreferences
         ) {
-            val eventCounts = parseEventCounts(prefs)
+            val eventColors = parseEventColors(prefs)
 
             val todayDay = now.get(Calendar.DAY_OF_MONTH)
             val todayMonth = now.get(Calendar.MONTH)
@@ -232,7 +255,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                             && displayMonthIndex == todayMonth
                             && displayYear == todayYear
                         val dateKey = formatDateKey(displayYear, displayMonthIndex + 1, day)
-                        val hasEvents = (eventCounts[dateKey] ?: 0) > 0
+                        val eventColor = eventColors[dateKey]
 
                         if (isToday) {
                             views.setInt(resId, "setBackgroundResource", R.drawable.today_circle_bg)
@@ -244,8 +267,19 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                                 if (isSundayCol) COLOR_DAY_SUNDAY else COLOR_DAY_NORMAL
                             )
                         }
-                        val label = if (hasEvents && !isToday) "$day·" else day.toString()
-                        views.setTextViewText(resId, label)
+                        val dayStr = day.toString()
+                        if (eventColor != null && !isToday) {
+                            val span = SpannableString("$dayStr·")
+                            span.setSpan(
+                                ForegroundColorSpan(eventColor),
+                                dayStr.length,
+                                span.length,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            views.setTextViewText(resId, span)
+                        } else {
+                            views.setTextViewText(resId, dayStr)
+                        }
                         val cellCal = (firstOfMonth.clone() as Calendar).apply {
                             set(Calendar.DAY_OF_MONTH, day)
                         }
@@ -284,19 +318,23 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             )
         }
 
-        private fun parseEventCounts(prefs: SharedPreferences): Map<String, Int> {
+        private fun parseEventColors(prefs: SharedPreferences): Map<String, Int> {
             val eventsJson = prefs.getString("events_json", "[]") ?: "[]"
-            val counts = mutableMapOf<String, Int>()
+            val colors = mutableMapOf<String, Int>()
             try {
                 val arr = JSONArray(eventsJson)
                 for (i in 0 until arr.length()) {
                     val obj = arr.getJSONObject(i)
                     if (obj.optBoolean("isHoliday", false)) continue
                     val start = obj.getString("start").substring(0, 10)
-                    counts[start] = (counts[start] ?: 0) + 1
+                    if (!colors.containsKey(start)) {
+                        // Flutter stores color as unsigned 32-bit ARGB; read as long then cast
+                        val colorInt = obj.optLong("color", -1L).toInt()
+                        colors[start] = colorInt
+                    }
                 }
             } catch (_: Exception) { }
-            return counts
+            return colors
         }
 
         private fun formatDateKey(year: Int, month: Int, day: Int): String =
