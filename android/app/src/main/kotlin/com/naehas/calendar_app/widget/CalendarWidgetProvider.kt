@@ -256,28 +256,33 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                             && displayYear == todayYear
                         val dateKey = formatDateKey(displayYear, displayMonthIndex + 1, day)
                         val eventColor = eventColors[dateKey]
+                        val dayStr = day.toString()
+                        val dayTextColor = if (isSundayCol) COLOR_DAY_SUNDAY else COLOR_DAY_NORMAL
 
                         if (isToday) {
                             views.setInt(resId, "setBackgroundResource", R.drawable.today_circle_bg)
                             views.setTextColor(resId, COLOR_TODAY_TEXT)
-                        } else {
+                            views.setTextViewText(resId, dayStr)
+                        } else if (eventColor != null) {
                             views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
-                            views.setTextColor(
-                                resId,
-                                if (isSundayCol) COLOR_DAY_SUNDAY else COLOR_DAY_NORMAL
-                            )
-                        }
-                        val dayStr = day.toString()
-                        if (eventColor != null && !isToday) {
+                            // Use two spans so setTextColor cannot override either color.
+                            // Span 1: day number in its normal color.
+                            // Span 2: dot in the event's calendar color.
                             val span = SpannableString("$dayStr·")
                             span.setSpan(
+                                ForegroundColorSpan(dayTextColor),
+                                0, dayStr.length,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                            span.setSpan(
                                 ForegroundColorSpan(eventColor),
-                                dayStr.length,
-                                span.length,
+                                dayStr.length, span.length,
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
                             views.setTextViewText(resId, span)
                         } else {
+                            views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
+                            views.setTextColor(resId, dayTextColor)
                             views.setTextViewText(resId, dayStr)
                         }
                         val cellCal = (firstOfMonth.clone() as Calendar).apply {
