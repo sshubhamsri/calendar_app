@@ -15,12 +15,12 @@
 
         <TextView
             android:id="@+id/widget_prev_month"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:gravity="center"
             android:text="&#8249;"
-            android:textColor="#FFFFFFFF"
-            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -35,13 +35,13 @@
 
         <TextView
             android:id="@+id/widget_next_month"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="2dp"
             android:gravity="center"
             android:text="&#8250;"
-            android:textColor="#FFFFFFFF"
-            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -52,22 +52,22 @@
 
         <TextView
             android:id="@+id/widget_settings_btn"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:gravity="center"
             android:text="&#9881;"
-            android:textColor="#FFFFFFFF"
-            android:textSize="14sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/widget_add_btn"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="2dp"
             android:gravity="center"
             android:text="+"
-            android:textColor="#FFFFFFFF"
-            android:textSize="20sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/widget_today_label"
@@ -95,12 +95,12 @@
             android:text=""
             android:textSize="8sp" />
 
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="M" android:textColor="#FFFFFFFF" android:textSize="9sp" android:gravity="center" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="#FFFFFFFF" android:textSize="9sp" android:gravity="center" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="W" android:textColor="#FFFFFFFF" android:textSize="9sp" android:gravity="center" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="#FFFFFFFF" android:textSize="9sp" android:gravity="center" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="F" android:textColor="#FFFFFFFF" android:textSize="9sp" android:gravity="center" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="#FFFFFFFF" android:textSize="9sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="M" android:textColor="#FFFFFF" android:textSize="9sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="#FFFFFF" android:textSize="9sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="W" android:textColor="#FFFFFF" android:textSize="9sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="#FFFFFF" android:textSize="9sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="F" android:textColor="#FFFFFF" android:textSize="9sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="#FFFFFF" android:textSize="9sp" android:gravity="center" />
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="#FF6B6B" android:textSize="9sp" android:gravity="center" />
     </LinearLayout>
 
@@ -114,7 +114,7 @@
 
         <!-- Week 0 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
-            <TextView android:id="@+id/widget_week_0" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#80FFFFFF" />
+            <TextView android:id="@+id/widget_week_0" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_0"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_1"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_2"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
@@ -138,7 +138,7 @@
 
         <!-- Week 1 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
-            <TextView android:id="@+id/widget_week_1" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#80FFFFFF" />
+            <TextView android:id="@+id/widget_week_1" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_7"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_8"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_9"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
@@ -162,7 +162,7 @@
 
         <!-- Week 2 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
-            <TextView android:id="@+id/widget_week_2" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#80FFFFFF" />
+            <TextView android:id="@+id/widget_week_2" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_14" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_15" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_16" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
@@ -186,7 +186,7 @@
 
         <!-- Week 3 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
-            <TextView android:id="@+id/widget_week_3" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#80FFFFFF" />
+            <TextView android:id="@+id/widget_week_3" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_21" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_22" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_23" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
@@ -210,7 +210,7 @@
 
         <!-- Week 4 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
-            <TextView android:id="@+id/widget_week_4" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#80FFFFFF" />
+            <TextView android:id="@+id/widget_week_4" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_28" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_29" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_30" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
@@ -234,7 +234,7 @@
 
         <!-- Week 5 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
-            <TextView android:id="@+id/widget_week_5" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#80FFFFFF" />
+            <TextView android:id="@+id/widget_week_5" android:layout_width="18dp" android:layout_height="match_parent" android:text="" android:textSize="8sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_35" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_36" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
             <TextView android:id="@+id/widget_cell_37" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
