@@ -66,13 +66,12 @@ class CalendarWidgetProvider : AppWidgetProvider() {
     companion object {
 
         private const val GRID_CELLS = 42
-        private const val ACTION_PREV_MONTH = "com.naehas.calendar_app.PREV_MONTH"
-        private const val ACTION_NEXT_MONTH = "com.naehas.calendar_app.NEXT_MONTH"
-        private const val ACTION_RESET_MONTH = "com.naehas.calendar_app.RESET_MONTH"
+        const val ACTION_PREV_MONTH = "com.naehas.calendar_app.PREV_MONTH"
+        const val ACTION_NEXT_MONTH = "com.naehas.calendar_app.NEXT_MONTH"
+        const val ACTION_RESET_MONTH = "com.naehas.calendar_app.RESET_MONTH"
         private const val WIDGET_PREFS = "widget_month_prefs"
         private const val KEY_MONTH_OFFSET = "month_offset"
 
-        // Light text colors (for transparent widget background)
         private val COLOR_DAY_NORMAL = Color.WHITE
         private val COLOR_DAY_SUNDAY = Color.parseColor("#FF6B6B")
         private val COLOR_DAY_MUTED = Color.parseColor("#80FFFFFF")
@@ -102,8 +101,10 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             setHeader(context, views, displayMonth, now)
             populateGrid(views, context, displayMonth, now, prefs)
             wireNavigationIntents(context, views)
+            wireEventsStrip(context, views, appWidgetId)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_events_list)
         }
 
         private fun setHeader(
@@ -182,6 +183,15 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             )
         }
 
+        private fun wireEventsStrip(context: Context, views: RemoteViews, appWidgetId: Int) {
+            val serviceIntent = Intent(context, CalendarRemoteViewsService::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
+            }
+            views.setRemoteAdapter(R.id.widget_events_list, serviceIntent)
+            views.setEmptyView(R.id.widget_events_list, R.id.widget_events_empty)
+        }
+
         private fun populateGrid(
             views: RemoteViews,
             context: Context,
@@ -190,6 +200,9 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             prefs: SharedPreferences
         ) {
             val eventColors = parseEventColors(prefs)
+            val weatherIcons = parseWeatherIcons(prefs)
+            val holidays = parseHolidays(prefs)
+            val selectedDateKey = parseSelectedDate(prefs)
 
             val todayDay = now.get(Calendar.DAY_OF_MONTH)
             val todayMonth = now.get(Calendar.MONTH)
@@ -203,7 +216,6 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 set(Calendar.MILLISECOND, 0)
             }
 
-            // Monday-first offset: Mon=2→0, Tue=3→1, ..., Sun=1→6
             val firstDayOfWeek = firstOfMonth.get(Calendar.DAY_OF_WEEK)
             val offset = (firstDayOfWeek + 5) % 7
 
@@ -211,7 +223,6 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             val prevMonth = (firstOfMonth.clone() as Calendar).apply { add(Calendar.MONTH, -1) }
             val daysInPrevMonth = prevMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-            // Populate week number labels
             for (row in 0 until 6) {
                 val weekResId = context.resources.getIdentifier(
                     "widget_week_$row", "id", context.packageName
@@ -235,6 +246,10 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 val col = i % 7
                 val isSundayCol = col == 6
 
+                val weatherResId = context.resources.getIdentifier(
+                    "widget_weather_$i", "id", context.packageName
+                )
+
                 when {
                     i < offset -> {
                         val day = daysInPrevMonth - offset + i + 1
@@ -247,6 +262,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, cellCal, 100 + i))
                         val dotResId = context.resources.getIdentifier("widget_dot_$i", "id", context.packageName)
                         if (dotResId != 0) views.setTextViewText(dotResId, "")
+                        if (weatherResId != 0) views.setTextViewText(weatherResId, "")
                     }
                     i < offset + daysInMonth -> {
                         val day = i - offset + 1
@@ -256,17 +272,24 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         val dateKey = formatDateKey(displayYear, displayMonthIndex + 1, day)
                         val eventColor = eventColors[dateKey]
                         val dayTextColor = if (isSundayCol) COLOR_DAY_SUNDAY else COLOR_DAY_NORMAL
+                        val isSelected = dateKey == selectedDateKey && !isToday
 
-                        if (isToday) {
-                            views.setInt(resId, "setBackgroundResource", R.drawable.today_circle_bg)
-                            views.setTextColor(resId, COLOR_TODAY_TEXT)
-                        } else {
-                            views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
-                            views.setTextColor(resId, dayTextColor)
+                        when {
+                            isToday -> {
+                                views.setInt(resId, "setBackgroundResource", R.drawable.today_circle_bg)
+                                views.setTextColor(resId, COLOR_TODAY_TEXT)
+                            }
+                            isSelected -> {
+                                views.setInt(resId, "setBackgroundResource", R.drawable.selected_ring_bg)
+                                views.setTextColor(resId, dayTextColor)
+                            }
+                            else -> {
+                                views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
+                                views.setTextColor(resId, dayTextColor)
+                            }
                         }
                         views.setTextViewText(resId, day.toString())
 
-                        // Drive the dedicated dot indicator TextView below this cell
                         val dotResId = context.resources.getIdentifier(
                             "widget_dot_$i", "id", context.packageName
                         )
@@ -278,6 +301,19 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                                 views.setTextViewText(dotResId, "")
                             }
                         }
+
+                        if (weatherResId != 0) {
+                            val weatherEmoji = weatherIcons[dateKey]
+                            val holidayTitle = holidays[dateKey]
+                            val label = when {
+                                weatherEmoji != null && holidayTitle != null -> "$weatherEmoji🎉"
+                                weatherEmoji != null -> weatherEmoji
+                                holidayTitle != null -> holidayTitle.take(4)
+                                else -> ""
+                            }
+                            views.setTextViewText(weatherResId, label)
+                        }
+
                         val cellCal = (firstOfMonth.clone() as Calendar).apply {
                             set(Calendar.DAY_OF_MONTH, day)
                         }
@@ -295,6 +331,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, nextMonth, 100 + i))
                         val dotResId = context.resources.getIdentifier("widget_dot_$i", "id", context.packageName)
                         if (dotResId != 0) views.setTextViewText(dotResId, "")
+                        if (weatherResId != 0) views.setTextViewText(weatherResId, "")
                     }
                 }
             }
@@ -308,7 +345,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             )
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("calendarapp://app/?date=$dateStr")
+                Uri.parse("calendarapp://app/day/$dateStr")
             ).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
@@ -318,7 +355,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             )
         }
 
-        private fun parseEventColors(prefs: SharedPreferences): Map<String, Int> {
+        fun parseEventColors(prefs: SharedPreferences): Map<String, Int> {
             val eventsJson = prefs.getString("events_json", "[]") ?: "[]"
             val colors = mutableMapOf<String, Int>()
             try {
@@ -328,7 +365,6 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     if (obj.optBoolean("isHoliday", false)) continue
                     val start = obj.getString("start").substring(0, 10)
                     if (!colors.containsKey(start)) {
-                        // Flutter stores color as unsigned 32-bit ARGB; read as long then cast
                         val colorInt = obj.optLong("color", -1L).toInt()
                         colors[start] = colorInt
                     }
@@ -337,7 +373,86 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             return colors
         }
 
-        private fun formatDateKey(year: Int, month: Int, day: Int): String =
+        fun parseTodayEvents(prefs: SharedPreferences): List<Pair<String, String>> {
+            val eventsJson = prefs.getString("events_json", "[]") ?: "[]"
+            val todayKey = run {
+                val c = Calendar.getInstance()
+                formatDateKey(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH))
+            }
+            val result = mutableListOf<Pair<String, String>>()
+            try {
+                val arr = JSONArray(eventsJson)
+                for (i in 0 until arr.length()) {
+                    val obj = arr.getJSONObject(i)
+                    val startStr = obj.getString("start")
+                    if (startStr.substring(0, 10) != todayKey) continue
+                    val title = obj.optString("title", "")
+                    val isAllDay = obj.optBoolean("isAllDay", false)
+                    val timeLabel = if (isAllDay) "All day" else {
+                        try {
+                            val fmt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                            val date = fmt.parse(startStr.replace("Z", "")) ?: continue
+                            SimpleDateFormat("HH:mm", Locale.getDefault()).format(date)
+                        } catch (_: Exception) { "" }
+                    }
+                    result += title to timeLabel
+                }
+            } catch (_: Exception) { }
+            return result
+        }
+
+        private fun parseWeatherIcons(prefs: SharedPreferences): Map<String, String> {
+            val weatherJson = prefs.getString("weather_json", "[]") ?: "[]"
+            val icons = mutableMapOf<String, String>()
+            try {
+                val arr = JSONArray(weatherJson)
+                for (i in 0 until arr.length()) {
+                    val obj = arr.getJSONObject(i)
+                    val dateStr = obj.getString("date").substring(0, 10)
+                    val iconCode = obj.optString("iconCode", "")
+                    val emoji = iconCodeToEmoji(iconCode)
+                    if (emoji.isNotEmpty()) icons[dateStr] = emoji
+                }
+            } catch (_: Exception) { }
+            return icons
+        }
+
+        private fun iconCodeToEmoji(iconCode: String): String = when {
+            iconCode.startsWith("01") -> "☀"
+            iconCode.startsWith("02") -> "⛅"
+            iconCode.startsWith("03") || iconCode.startsWith("04") -> "☁"
+            iconCode.startsWith("09") || iconCode.startsWith("10") -> "🌧"
+            iconCode.startsWith("11") -> "⛈"
+            iconCode.startsWith("13") -> "❄"
+            iconCode.startsWith("50") -> "🌫"
+            else -> ""
+        }
+
+        private fun parseHolidays(prefs: SharedPreferences): Map<String, String> {
+            val eventsJson = prefs.getString("events_json", "[]") ?: "[]"
+            val holidays = mutableMapOf<String, String>()
+            try {
+                val arr = JSONArray(eventsJson)
+                for (i in 0 until arr.length()) {
+                    val obj = arr.getJSONObject(i)
+                    if (!obj.optBoolean("isHoliday", false)) continue
+                    val dateStr = obj.getString("start").substring(0, 10)
+                    if (!holidays.containsKey(dateStr)) {
+                        holidays[dateStr] = obj.optString("title", "")
+                    }
+                }
+            } catch (_: Exception) { }
+            return holidays
+        }
+
+        private fun parseSelectedDate(prefs: SharedPreferences): String? {
+            return try {
+                val raw = prefs.getString("selected_date", null) ?: return null
+                raw.substring(0, 10)
+            } catch (_: Exception) { null }
+        }
+
+        fun formatDateKey(year: Int, month: Int, day: Int): String =
             "%04d-%02d-%02d".format(year, month, day)
     }
 }

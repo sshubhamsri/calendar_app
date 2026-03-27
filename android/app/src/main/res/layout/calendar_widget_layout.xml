@@ -104,7 +104,7 @@
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="#FF6B6B" android:textSize="9sp" android:gravity="center" />
     </LinearLayout>
 
-    <!-- Calendar grid: 6 week blocks, each block = day row + dot indicator row -->
+    <!-- Calendar grid: 6 week blocks, each block = day row + dot row + weather/holiday row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -133,6 +133,16 @@
             <TextView android:id="@+id/widget_dot_5"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_6"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
         </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="8dp" android:orientation="horizontal">
+            <TextView android:layout_width="18dp" android:layout_height="match_parent" android:text="" />
+            <TextView android:id="@+id/widget_weather_0"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_1"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_2"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_3"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_4"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_5"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_6"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+        </LinearLayout>
 
         <TextView android:layout_width="match_parent" android:layout_height="1px" android:background="#26FFFFFF" android:text="" />
 
@@ -156,6 +166,16 @@
             <TextView android:id="@+id/widget_dot_11" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_12" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_13" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="8dp" android:orientation="horizontal">
+            <TextView android:layout_width="18dp" android:layout_height="match_parent" android:text="" />
+            <TextView android:id="@+id/widget_weather_7"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_8"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_9"  android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_10" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_11" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_12" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_13" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <TextView android:layout_width="match_parent" android:layout_height="1px" android:background="#26FFFFFF" android:text="" />
@@ -181,6 +201,16 @@
             <TextView android:id="@+id/widget_dot_19" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_20" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
         </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="8dp" android:orientation="horizontal">
+            <TextView android:layout_width="18dp" android:layout_height="match_parent" android:text="" />
+            <TextView android:id="@+id/widget_weather_14" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_15" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_16" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_17" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_18" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_19" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_20" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+        </LinearLayout>
 
         <TextView android:layout_width="match_parent" android:layout_height="1px" android:background="#26FFFFFF" android:text="" />
 
@@ -204,6 +234,16 @@
             <TextView android:id="@+id/widget_dot_25" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_26" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_27" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="8dp" android:orientation="horizontal">
+            <TextView android:layout_width="18dp" android:layout_height="match_parent" android:text="" />
+            <TextView android:id="@+id/widget_weather_21" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_22" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_23" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_24" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_25" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_26" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_27" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <TextView android:layout_width="match_parent" android:layout_height="1px" android:background="#26FFFFFF" android:text="" />
@@ -229,6 +269,16 @@
             <TextView android:id="@+id/widget_dot_33" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_34" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
         </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="8dp" android:orientation="horizontal">
+            <TextView android:layout_width="18dp" android:layout_height="match_parent" android:text="" />
+            <TextView android:id="@+id/widget_weather_28" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_29" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_30" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_31" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_32" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_33" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_34" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+        </LinearLayout>
 
         <TextView android:layout_width="match_parent" android:layout_height="1px" android:background="#26FFFFFF" android:text="" />
 
@@ -253,7 +303,44 @@
             <TextView android:id="@+id/widget_dot_40" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
             <TextView android:id="@+id/widget_dot_41" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
         </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="8dp" android:orientation="horizontal">
+            <TextView android:layout_width="18dp" android:layout_height="match_parent" android:text="" />
+            <TextView android:id="@+id/widget_weather_35" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_36" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_37" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_38" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_39" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_40" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+            <TextView android:id="@+id/widget_weather_41" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="7sp" android:gravity="center" android:textColor="#FFFFFF" />
+        </LinearLayout>
 
     </LinearLayout>
+
+    <!-- Upcoming events strip: today's events shown below the grid -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#26FFFFFF"
+        android:text=""
+        android:layout_marginTop="2dp" />
+
+    <ListView
+        android:id="@+id/widget_events_list"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="2dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/widget_events_empty"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:text="No events today"
+        android:textColor="#80FFFFFF"
+        android:textSize="11sp"
+        android:visibility="gone" />
 
 </LinearLayout>

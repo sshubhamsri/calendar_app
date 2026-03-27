@@ -21,6 +21,7 @@ class CalendarScreen extends ConsumerStatefulWidget {
 class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   late PageController _pageController;
   late DateTime _currentMonth;
+  DateTime? _selectedDay;
 
   @override
   void initState() {
@@ -45,8 +46,14 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     ref.read(widgetSyncServiceProvider).syncToWidget(
           events: events,
           weatherDays: weather,
-          selectedDate: _currentMonth,
+          selectedDate: _selectedDay ?? _currentMonth,
         );
+  }
+
+  void _onDayTap(DateTime date) {
+    setState(() => _selectedDay = date);
+    _syncWidget();
+    context.push('/day/${date.toIso8601String()}');
   }
 
   void _goToPreviousMonth() {
@@ -111,8 +118,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                         const EdgeInsets.symmetric(horizontal: 8),
                     child: CalendarGrid(
                       month: month,
-                      onDayTap: (date) =>
-                          context.push('/day/${ date.toIso8601String()}'),
+                      onDayTap: _onDayTap,
                       onEventTap: (event) =>
                           context.push('/event/${event.id}', extra: event),
                     ),

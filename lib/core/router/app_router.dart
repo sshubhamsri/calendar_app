@@ -5,6 +5,7 @@ import '../../features/calendar/data/models/calendar_event.dart';
 import '../../features/calendar/domain/providers/calendar_provider.dart';
 import '../../features/calendar/presentation/screens/calendar_screen.dart';
 import '../../features/calendar/presentation/screens/create_edit_event_screen.dart';
+import '../../features/calendar/presentation/screens/day_events_screen.dart';
 import '../../features/calendar/presentation/screens/event_detail_screen.dart';
 import '../../features/calendar/presentation/screens/permission_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -31,6 +32,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final d = state.uri.queryParameters['date'];
           final initialDate = d != null ? DateTime.tryParse(d) : null;
           return CalendarScreen(initialDate: initialDate);
+        },
+      ),
+      GoRoute(
+        path: '/day/:date',
+        builder: (_, state) {
+          final date = DateTime.parse(state.pathParameters['date']!);
+          return DayEventsScreen(date: date);
         },
       ),
       GoRoute(

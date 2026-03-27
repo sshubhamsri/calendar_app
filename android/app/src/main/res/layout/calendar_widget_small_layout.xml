@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_card_bg"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Header: month label + today badge -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/small_widget_month_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="MAR"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/small_widget_event_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#B3FFFFFF"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/small_widget_today_label"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="6dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:background="@drawable/today_circle_bg" />
+    </LinearLayout>
+
+    <!-- DOW header row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="M" android:textColor="#FFFFFF" android:textSize="8sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="#FFFFFF" android:textSize="8sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="W" android:textColor="#FFFFFF" android:textSize="8sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="T" android:textColor="#FFFFFF" android:textSize="8sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="F" android:textColor="#FFFFFF" android:textSize="8sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="#FFFFFF" android:textSize="8sp" android:gravity="center" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="S" android:textColor="#FF6B6B" android:textSize="8sp" android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Current week: 7 day cells -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp">
+
+        <TextView android:id="@+id/small_cell_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
+        <TextView android:id="@+id/small_cell_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
+        <TextView android:id="@+id/small_cell_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
+        <TextView android:id="@+id/small_cell_3" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
+        <TextView android:id="@+id/small_cell_4" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
+        <TextView android:id="@+id/small_cell_5" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FFFFFF" />
+        <TextView android:id="@+id/small_cell_6" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:textSize="12sp" android:gravity="center" android:textColor="#FF6B6B" />
+    </LinearLayout>
+
+    <!-- Dot row for the current week -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:orientation="horizontal">
+
+        <TextView android:id="@+id/small_dot_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        <TextView android:id="@+id/small_dot_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        <TextView android:id="@+id/small_dot_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        <TextView android:id="@+id/small_dot_3" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        <TextView android:id="@+id/small_dot_4" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        <TextView android:id="@+id/small_dot_5" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+        <TextView android:id="@+id/small_dot_6" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="" android:textSize="6sp" android:gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>
