@@ -8,9 +8,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.widget.RemoteViews
 import com.naehas.calendar_app.R
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -248,6 +245,8 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                             set(Calendar.DAY_OF_MONTH, day)
                         }
                         views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, cellCal, 100 + i))
+                        val dotResId = context.resources.getIdentifier("widget_dot_$i", "id", context.packageName)
+                        if (dotResId != 0) views.setTextViewText(dotResId, "")
                     }
                     i < offset + daysInMonth -> {
                         val day = i - offset + 1
@@ -256,34 +255,28 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                             && displayYear == todayYear
                         val dateKey = formatDateKey(displayYear, displayMonthIndex + 1, day)
                         val eventColor = eventColors[dateKey]
-                        val dayStr = day.toString()
                         val dayTextColor = if (isSundayCol) COLOR_DAY_SUNDAY else COLOR_DAY_NORMAL
 
                         if (isToday) {
                             views.setInt(resId, "setBackgroundResource", R.drawable.today_circle_bg)
                             views.setTextColor(resId, COLOR_TODAY_TEXT)
-                            views.setTextViewText(resId, dayStr)
-                        } else if (eventColor != null) {
-                            views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
-                            // Use two spans so setTextColor cannot override either color.
-                            // Span 1: day number in its normal color.
-                            // Span 2: dot in the event's calendar color.
-                            val span = SpannableString("$dayStr·")
-                            span.setSpan(
-                                ForegroundColorSpan(dayTextColor),
-                                0, dayStr.length,
-                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                            span.setSpan(
-                                ForegroundColorSpan(eventColor),
-                                dayStr.length, span.length,
-                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                            )
-                            views.setTextViewText(resId, span)
                         } else {
                             views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
                             views.setTextColor(resId, dayTextColor)
-                            views.setTextViewText(resId, dayStr)
+                        }
+                        views.setTextViewText(resId, day.toString())
+
+                        // Drive the dedicated dot indicator TextView below this cell
+                        val dotResId = context.resources.getIdentifier(
+                            "widget_dot_$i", "id", context.packageName
+                        )
+                        if (dotResId != 0) {
+                            if (eventColor != null) {
+                                views.setTextViewText(dotResId, "●")
+                                views.setTextColor(dotResId, eventColor)
+                            } else {
+                                views.setTextViewText(dotResId, "")
+                            }
                         }
                         val cellCal = (firstOfMonth.clone() as Calendar).apply {
                             set(Calendar.DAY_OF_MONTH, day)
@@ -300,6 +293,8 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                             set(Calendar.DAY_OF_MONTH, day)
                         }
                         views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, nextMonth, 100 + i))
+                        val dotResId = context.resources.getIdentifier("widget_dot_$i", "id", context.packageName)
+                        if (dotResId != 0) views.setTextViewText(dotResId, "")
                     }
                 }
             }
