@@ -10,7 +10,9 @@ import '../../../widget_sync/domain/providers/widget_sync_provider.dart';
 import '../widgets/calendar_grid.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
-  const CalendarScreen({super.key});
+  const CalendarScreen({super.key, this.initialDate});
+
+  final DateTime? initialDate;
 
   @override
   ConsumerState<CalendarScreen> createState() => _CalendarScreenState();
@@ -23,8 +25,12 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   @override
   void initState() {
     super.initState();
-    _currentMonth = DateTime.now();
-    _pageController = PageController(initialPage: 1000);
+    final now = DateTime.now();
+    final target = widget.initialDate ?? now;
+    final monthDelta =
+        (target.year - now.year) * 12 + (target.month - now.month);
+    _currentMonth = DateTime(target.year, target.month);
+    _pageController = PageController(initialPage: 1000 + monthDelta);
   }
 
   @override

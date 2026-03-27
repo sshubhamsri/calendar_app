@@ -43,6 +43,16 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 )
                 ids.forEach { updateWidget(context, manager, it) }
             }
+            ACTION_RESET_MONTH -> {
+                context.getSharedPreferences(WIDGET_PREFS, Context.MODE_PRIVATE)
+                    .edit().putInt(KEY_MONTH_OFFSET, 0).apply()
+
+                val manager = AppWidgetManager.getInstance(context)
+                val ids = manager.getAppWidgetIds(
+                    android.content.ComponentName(context, CalendarWidgetProvider::class.java)
+                )
+                ids.forEach { updateWidget(context, manager, it) }
+            }
         }
     }
 
@@ -51,6 +61,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
         private const val GRID_CELLS = 42
         private const val ACTION_PREV_MONTH = "com.naehas.calendar_app.PREV_MONTH"
         private const val ACTION_NEXT_MONTH = "com.naehas.calendar_app.NEXT_MONTH"
+        private const val ACTION_RESET_MONTH = "com.naehas.calendar_app.RESET_MONTH"
         private const val WIDGET_PREFS = "widget_month_prefs"
         private const val KEY_MONTH_OFFSET = "month_offset"
 
@@ -139,6 +150,16 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             )
+            val resetIntent = Intent(context, CalendarWidgetProvider::class.java).apply {
+                action = ACTION_RESET_MONTH
+            }
+            views.setOnClickPendingIntent(
+                R.id.widget_today_label,
+                PendingIntent.getBroadcast(
+                    context, 3, resetIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
         }
 
         private fun populateGrid(
@@ -200,6 +221,10 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         views.setTextViewText(resId, day.toString())
                         views.setTextColor(resId, COLOR_DAY_MUTED)
                         views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
+                        val cellCal = (prevMonth.clone() as Calendar).apply {
+                            set(Calendar.DAY_OF_MONTH, day)
+                        }
+                        views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, cellCal, 100 + i))
                     }
                     i < offset + daysInMonth -> {
                         val day = i - offset + 1
@@ -221,15 +246,42 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         }
                         val label = if (hasEvents && !isToday) "$day·" else day.toString()
                         views.setTextViewText(resId, label)
+                        val cellCal = (firstOfMonth.clone() as Calendar).apply {
+                            set(Calendar.DAY_OF_MONTH, day)
+                        }
+                        views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, cellCal, 100 + i))
                     }
                     else -> {
                         val day = i - offset - daysInMonth + 1
                         views.setTextViewText(resId, day.toString())
                         views.setTextColor(resId, COLOR_DAY_MUTED)
                         views.setInt(resId, "setBackgroundColor", Color.TRANSPARENT)
+                        val nextMonth = (firstOfMonth.clone() as Calendar).apply {
+                            add(Calendar.MONTH, 1)
+                            set(Calendar.DAY_OF_MONTH, day)
+                        }
+                        views.setOnClickPendingIntent(resId, buildDatePendingIntent(context, nextMonth, 100 + i))
                     }
                 }
             }
+        }
+
+        private fun buildDatePendingIntent(context: Context, cal: Calendar, requestCode: Int): PendingIntent {
+            val dateStr = formatDateKey(
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("calendarapp://app/?date=$dateStr")
+            ).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            return PendingIntent.getActivity(
+                context, requestCode, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
         }
 
         private fun parseEventCounts(prefs: SharedPreferences): Map<String, Int> {
